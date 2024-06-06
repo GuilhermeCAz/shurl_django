@@ -1,0 +1,51 @@
+[project]
+name = "shurl_django"
+version = "1.0.0"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ "name" = "GuilhermeCAz" }]
+dependencies = ["django", "python-dotenv"]
+
+[project.optional-dependencies]
+dev = ["django-stubs", "mypy", "pip-tools", "ruff"]
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+strict = true
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.ruff.lint]
+select = [
+    "ANN", # flake8-annotations
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    # "D",   # pydocstyle
+    "E",   # pycodestyle error
+    "F",   # flake8
+    "I",   # isort
+    "N",   # pep8-naming
+    "PD",  # pandas-vet
+    "PL",  # Pylint
+    "RET", # flake8-return
+    "RUF", # ruff-specific rules
+    "S",   # flake8-bandit
+    "SIM", # flake8-simplify
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    "TRY", # tryceratops
+    "UP",  # pyupgrade
+    "W",   # pycodestyle warning
+]
+
+extend-ignore = [
+    "ANN101", # missing-type-self: deprecated
+    "D212",   # multi-line-summary-first-line: clashes with D213
+]
+
+[tool.setuptools]
+py-modules = []
