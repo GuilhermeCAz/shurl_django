@@ -4,7 +4,7 @@ version = "1.0.0"
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [{ "name" = "GuilhermeCAz" }]
-dependencies = ["django", "python-dotenv"]
+dependencies = ["django", "django-environ", "psycopg2-binary"]
 
 [project.optional-dependencies]
 dev = ["django-stubs", "mypy", "pip-tools", "ruff"]

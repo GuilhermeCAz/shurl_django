@@ -21,6 +21,8 @@ django==5.0.6
     #   django-stubs
     #   django-stubs-ext
     #   shurl_django (pyproject.toml)
+django-environ==0.11.2
+    # via shurl_django (pyproject.toml)
 django-stubs==5.0.2
     # via shurl_django (pyproject.toml)
 django-stubs-ext==5.0.2
@@ -33,12 +35,12 @@ packaging==24.0
     # via build
 pip-tools==7.4.1
     # via shurl_django (pyproject.toml)
+psycopg2-binary==2.9.9
+    # via shurl_django (pyproject.toml)
 pyproject-hooks==1.1.0
     # via
     #   build
     #   pip-tools
-python-dotenv==1.0.1
-    # via shurl_django (pyproject.toml)
 ruff==0.4.8
     # via shurl_django (pyproject.toml)
 sqlparse==0.5.0

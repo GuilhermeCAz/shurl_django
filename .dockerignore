@@ -1,0 +1,12 @@
+.git/
+**/*.egg-info/
+**/.mypy_cache/
+**/.venv/
+**/__pycache__/
+.gitignore
+compose.yaml
+Dockerfile
+LICENSE
+Makefile
+README.md
+requirements-dev.txt
