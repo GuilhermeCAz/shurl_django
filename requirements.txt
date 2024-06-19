@@ -12,6 +12,8 @@ django-environ==0.11.2
     # via shurl_django (pyproject.toml)
 psycopg2-binary==2.9.9
     # via shurl_django (pyproject.toml)
+pyyaml==6.0.1
+    # via shurl_django (pyproject.toml)
 sqlparse==0.5.0
     # via django
 tzdata==2024.1

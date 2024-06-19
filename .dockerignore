@@ -1,8 +1,6 @@
 .git/
 **/*.egg-info/
-**/.mypy_cache/
-**/.venv/
-**/__pycache__/
+.dockerignore
 .gitignore
 compose.yaml
 Dockerfile
@@ -10,3 +8,22 @@ LICENSE
 Makefile
 README.md
 requirements-dev.txt
+
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
