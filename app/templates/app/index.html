@@ -6,7 +6,15 @@
   <h1>Welcome to the Home Page</h1>
   <p>This is the index page of the project.</p>
   <form action="" method="post">
-    <input type="url">
-    <button type="submit">Shrink</button>
+    <div class="input-group mb-3">
+      <input type="url"
+             class="form-control"
+             placeholder="Enter with URL..."
+             aria-label="Enter with URL..."
+             aria-describedby="button-addon2">
+      <button class="btn btn-outline-primary" type="button" id="button-addon2">
+        Shrink
+      </button>
+    </div>
   </form>
 {% endblock content %}
