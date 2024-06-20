@@ -5,4 +5,5 @@ class URLForm(forms.Form):
     original_url = forms.URLField(
         label='Enter URL',
         widget=forms.URLInput(attrs={'placeholder': 'https://example.com'}),
+        required=True,
     )

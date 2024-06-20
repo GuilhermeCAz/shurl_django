@@ -6,7 +6,8 @@
   <h1>Welcome to the Home Page</h1>
   <p>This is the index page of the project.</p>
   <form action="" method="post">
-    <input type="url">
+    {% csrf_token %}
+    {{ form }}
     <button type="submit">Shrink</button>
   </form>
 {% endblock content %}
