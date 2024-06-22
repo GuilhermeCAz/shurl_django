@@ -17,21 +17,12 @@ import environ
 env = environ.Env(DEBUG=(bool, False))
 env.read_env()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
-
 ALLOWED_HOSTS: list[str] = []
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -41,7 +32,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
-    'bootstrap5'
+    'django_bootstrap5',
+    'drf_spectacular',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -74,9 +67,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'shurl_django.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -88,9 +78,6 @@ DATABASES = {
     }
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 DJ_PWD_VALIDATION = 'django.contrib.auth.password_validation'  # noqa: S105
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': f'{DJ_PWD_VALIDATION}.UserAttributeSimilarityValidator'},
@@ -99,25 +86,89 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': f'{DJ_PWD_VALIDATION}.NumericPasswordValidator'},
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_DEFAULTS = {
+    'OAS_VERSION': '3.0.3',
+    # Configuration for serving a schema subset with SpectacularAPIView
+    'SERVE_URLCONF': None,
+    'SERVE_PUBLIC': True,
+    # https://swagger.io/docs/open-source-tools/swagger-ui/usage/configuration/
+    'SWAGGER_UI_SETTINGS': {'deepLinking': True},
+    # Initialize SwaggerUI with additional OAuth2 configuration.
+    # https://swagger.io/docs/open-source-tools/swagger-ui/usage/oauth2/
+    'SWAGGER_UI_OAUTH2_CONFIG': {},
+    # https://redocly.com/docs/redoc/config/#functional-settings
+    'REDOC_UI_SETTINGS': {},
+    # Append OpenAPI objects to path and components in addition to the generated objects  # noqa: E501
+    'APPEND_PATHS': {},
+    'APPEND_COMPONENTS': {},
+    # Postprocessing functions that run at the end of schema generation.
+    # must satisfy interface result = hook(generator, request, public, result)
+    'POSTPROCESSING_HOOKS': ['drf_spectacular.hooks.postprocess_schema_enums'],
+    # Preprocessing functions that run before schema generation.
+    # must satisfy interface result = hook(endpoints=result) where result
+    # is a list of Tuples (path, path_regex, method, callback).
+    # Example: 'drf_spectacular.hooks.preprocess_exclude_path_format'
+    'PREPROCESSING_HOOKS': [],
+    'DEFAULT_QUERY_MANAGER': '_default_manager',  # objects
+    # Controls which authentication methods are exposed in the schema. If not None, will hide  # noqa: E501
+    # authentication classes that are not contained in the whitelist. Use full import paths  # noqa: E501
+    # like ['rest_framework.authentication.TokenAuthentication', ...].
+    # Empty list ([]) will hide all authentication methods. The default None will show all.  # noqa: E501
+    'AUTHENTICATION_WHITELIST': None,
+    # Controls which parsers are exposed in the schema. Works analog to AUTHENTICATION_WHITELIST.  # noqa: E501
+    # List of allowed parsers or None to allow all.
+    'PARSER_WHITELIST': None,
+    # Controls which renderers are exposed in the schema. Works analog to AUTHENTICATION_WHITELIST.  # noqa: E501
+    # rest_framework.renderers.BrowsableAPIRenderer is ignored by default if whitelist is None  # noqa: E501
+    'RENDERER_WHITELIST': None,
+    # Runs exemplary schema generation and emits warnings as part of "./manage.py check --deploy"  # noqa: E501
+    'ENABLE_DJANGO_DEPLOY_CHECK': True,
+    # General schema metadata. Refer to spec for valid inputs
+    # https://spec.openapis.org/oas/v3.0.3#openapi-object
+    'TITLE': 'shurl API',
+    'DESCRIPTION': 'A simple URL shortening API',
+    'TOS': None,
+    'CONTACT': {'name': 'GuilhermeCAz'},
+    'LICENSE': {'name': 'MIT', 'url': 'https://opensource.org/licenses/MIT'},
+    # Statically set schema version. May also be an empty string. When used together with  # noqa: E501
+    # view versioning, will become '0.0.0 (v2)' for 'v2' versioned requests.
+    # Set VERSION to None if only the request version should be rendered.
+    'VERSION': '1.0.0',
+    # Optional list of servers.
+    # Each entry MUST contain "url", MAY contain "description", "variables"
+    # e.g. [{'url': 'https://example.com/v1', 'description': 'Text'}, ...]
+    'SERVERS': [],
+    # Optional: List of OpenAPI 3.1 webhooks. Each entry should be an import path to an  # noqa: E501
+    # OpenApiWebhook instance.
+    'WEBHOOKS': [],
+    # Arbitrary specification extensions attached to the schema's info object.
+    # https://swagger.io/specification/#specification-extensions
+    'EXTENSIONS_INFO': {},
+    # Arbitrary specification extensions attached to the schema's root object.
+    # https://swagger.io/specification/#specification-extensions
+    'EXTENSIONS_ROOT': {},
+    # Oauth2 related settings. used for example by django-oauth2-toolkit.
+    # https://spec.openapis.org/oas/v3.0.3#oauthFlowsObject
+    'OAUTH2_FLOWS': [],
+    'OAUTH2_AUTHORIZATION_URL': None,
+    'OAUTH2_TOKEN_URL': None,
+    'OAUTH2_REFRESH_URL': None,
+    'OAUTH2_SCOPES': None,
+}

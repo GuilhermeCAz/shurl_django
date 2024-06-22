@@ -16,6 +16,7 @@ requirements-dev.txt
 
 # Environments
 .env
+.env.example
 .venv
 env/
 venv/

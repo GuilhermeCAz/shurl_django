@@ -1,25 +1,22 @@
 html,
 body {
-    margin: 0;
-    padding: 0;
-}
-
-html,
-body {
-    height: 100%;
-    width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: powderblue;
+  height: 100%;
+  width: 100%;
 }
 
 body {
-    padding: 0.5%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  padding: 0.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 div.content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

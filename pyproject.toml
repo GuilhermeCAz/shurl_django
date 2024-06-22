@@ -4,14 +4,21 @@ version = "1.0.0"
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [{ "name" = "GuilhermeCAz" }]
-dependencies = ["django", "django-environ", "psycopg2-binary", "pyyaml", "django-bootstrap-v5"]
+dependencies = [
+    "django",
+    "django-bootstrap5",
+    "django-environ",
+    "drf-spectacular",
+    "psycopg2-binary",
+    "pyyaml",
+]
 
 [project.optional-dependencies]
 dev = ["django-stubs", "djlint", "mypy", "pip-tools", "ruff"]
 
 [tool.djlint]
-profile = "django"
 max_line_length = 80
+profile = "django"
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]

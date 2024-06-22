@@ -1,35 +1,52 @@
-import yaml
+from django.db.models import query
 from django.http.request import HttpRequest
-from django.http.response import (
+from django.shortcuts import (
     HttpResponse,
     HttpResponsePermanentRedirect,
     HttpResponseRedirect,
-    JsonResponse,
+    get_object_or_404,
+    redirect,
+    render,
 )
-from django.shortcuts import get_object_or_404, redirect, render
+from rest_framework import viewsets
 
 from app.forms import URLForm
 from app.models import URL
+from app.serializer import URLSerializer
 from app.utils import generate_slug
-from shurl_django.settings import BASE_DIR
 
 
-def docs(request: HttpRequest) -> HttpResponse:
+class URLViewSet(viewsets.ModelViewSet):
     """
-    Retrieves the OpenAPI specification from a YAML file and returns it as a
-    JSON response.
-
-    Args:
-        request (HttpRequest): The HTTP request object.
-
-    Returns:
-        HttpResponse: The HTTP response object containing the OpenAPI
-        specification as JSON.
+    ViewSet for the URL model.
     """
-    with open(BASE_DIR / 'openapi.yaml') as f:
-        spec = yaml.safe_load(f)
 
-    return JsonResponse(spec)
+    queryset = URL.objects.all()
+    serializer_class = URLSerializer
+
+    def get_serializer_context(self) -> dict:
+        return {'request': self.request}
+
+    def get_queryset(self) -> query.QuerySet[URL]:
+        return URL.objects.filter(slug=self.kwargs['slug'])
+
+    def redirect_to_original(
+        self, request: HttpRequest, slug: str
+    ) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
+        """
+        Redirects the user to the original URL associated with a given slug.
+
+        Args:
+            request (HttpRequest): The HTTP request object.
+            slug (str): The slug of the URL to redirect to.
+
+        Returns:
+            HttpResponseRedirect | HttpResponsePermanentRedirect: The HTTP
+            response object that redirects the user to the original URL.
+        """
+        url = get_object_or_404(URL, slug=slug)
+
+        return redirect(url.original_url)
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -53,22 +70,3 @@ def index(request: HttpRequest) -> HttpResponse:
         form = URLForm()
 
     return render(request, 'app/index.html', {'form': form})
-
-
-def redirect_to_original(
-    request: HttpRequest, slug: str
-) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
-    """
-    Redirects the user to the original URL associated with a given slug.
-
-    Args:
-        request (HttpRequest): The HTTP request object.
-        slug (str): The slug of the URL to redirect to.
-
-    Returns:
-        HttpResponseRedirect | HttpResponsePermanentRedirect: The HTTP response
-        object that redirects the user to the original URL.
-    """
-    url = get_object_or_404(URL, slug=slug)
-
-    return redirect(url.original_url)
