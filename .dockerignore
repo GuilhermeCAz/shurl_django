@@ -1,4 +1,5 @@
 .git/
+.github/
 **/*.egg-info/
 .dockerignore
 .gitignore

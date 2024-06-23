@@ -13,8 +13,6 @@ services:
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:${WEB_PORT}
-    volumes:
-      - .:/app
     ports:
       - '${WEB_PORT}:8000'
     env_file:
