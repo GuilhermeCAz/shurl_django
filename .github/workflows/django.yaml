@@ -9,15 +9,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+
     services:
       postgres:
         image: postgres:latest
-        env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-
-    env:
-      SECRET_KEY: ${{ secrets.SECRET_KEY }}
 
     steps:
       - name: Checkout code
@@ -25,10 +24,6 @@ jobs:
 
       - name: Debug environment variables
         run: env
-
-      - name: Set up Docker Compose
-        run: |
-          docker-compose --version
 
       - name: Build and start containers
         run: |
