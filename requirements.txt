@@ -12,10 +12,13 @@ attrs==23.2.0
     #   referencing
 django==5.0.6
     # via
+    #   django-allauth
     #   django-bootstrap5
     #   djangorestframework
     #   drf-spectacular
     #   shurl_django (pyproject.toml)
+django-allauth==0.63.3
+    # via shurl_django (pyproject.toml)
 django-bootstrap5==24.2
     # via shurl_django (pyproject.toml)
 django-environ==0.11.2
@@ -33,9 +36,7 @@ jsonschema-specifications==2023.12.1
 psycopg2-binary==2.9.9
     # via shurl_django (pyproject.toml)
 pyyaml==6.0.1
-    # via
-    #   drf-spectacular
-    #   shurl_django (pyproject.toml)
+    # via drf-spectacular
 referencing==0.35.1
     # via
     #   jsonschema

@@ -28,12 +28,15 @@ cssbeautifier==1.15.1
     # via djlint
 django==5.0.6
     # via
+    #   django-allauth
     #   django-bootstrap5
     #   django-stubs
     #   django-stubs-ext
     #   djangorestframework
     #   drf-spectacular
     #   shurl_django (pyproject.toml)
+django-allauth==0.63.3
+    # via shurl_django (pyproject.toml)
 django-bootstrap5==24.2
     # via shurl_django (pyproject.toml)
 django-environ==0.11.2
@@ -88,7 +91,6 @@ pyyaml==6.0.1
     # via
     #   djlint
     #   drf-spectacular
-    #   shurl_django (pyproject.toml)
 referencing==0.35.1
     # via
     #   jsonschema

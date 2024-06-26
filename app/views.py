@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from django.db.models import query
 from django.http.request import HttpRequest
 from django.shortcuts import (
@@ -8,7 +10,7 @@ from django.shortcuts import (
     redirect,
     render,
 )
-from rest_framework import viewsets
+from rest_framework import permissions, viewsets
 
 from app.forms import URLForm
 from app.models import URL
@@ -23,30 +25,39 @@ class URLViewSet(viewsets.ModelViewSet):
 
     queryset = URL.objects.all()
     serializer_class = URLSerializer
-
-    def get_serializer_context(self) -> dict:
-        return {'request': self.request}
+    permission_classes: ClassVar = [permissions.IsAuthenticated]
 
     def get_queryset(self) -> query.QuerySet[URL]:
-        return URL.objects.filter(slug=self.kwargs['slug'])
-
-    def redirect_to_original(
-        self, request: HttpRequest, slug: str
-    ) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
         """
-        Redirects the user to the original URL associated with a given slug.
-
-        Args:
-            request (HttpRequest): The HTTP request object.
-            slug (str): The slug of the URL to redirect to.
-
-        Returns:
-            HttpResponseRedirect | HttpResponsePermanentRedirect: The HTTP
-            response object that redirects the user to the original URL.
+        Retrieves and returns a filtered QuerySet of URLs based on the
+        requesting user.
         """
-        url = get_object_or_404(URL, slug=slug)
+        return self.queryset.filter(user=self.request.user)
 
-        return redirect(url.original_url)
+    def perform_create(self, serializer: URLSerializer) -> None:
+        """
+        Saves the serializer with the current user as the owner.
+        """
+        serializer.save(user=self.request.user)
+
+
+def redirect_to_original(
+    request: HttpRequest, slug: str
+) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
+    """
+    Redirects the user to the original URL associated with a given slug.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+        slug (str): The slug of the URL to redirect to.
+
+    Returns:
+        HttpResponseRedirect | HttpResponsePermanentRedirect: The HTTP response
+        object that redirects the user to the original URL.
+    """
+    url = get_object_or_404(URL, slug=slug)
+
+    return redirect(url.original_url)
 
 
 def index(request: HttpRequest) -> HttpResponse:

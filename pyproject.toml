@@ -6,11 +6,11 @@ requires-python = ">=3.12"
 authors = [{ "name" = "GuilhermeCAz" }]
 dependencies = [
     "django",
+    "django-allauth",
     "django-bootstrap5",
     "django-environ",
     "drf-spectacular",
     "psycopg2-binary",
-    "pyyaml",
 ]
 
 [project.optional-dependencies]

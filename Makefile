@@ -22,6 +22,4 @@ logs:
 
 requirements:
 	pip-compile -o requirements.txt --strip-extras
-
-requirements-dev:
 	pip-compile -o requirements-dev.txt --strip-extras --extra=dev
