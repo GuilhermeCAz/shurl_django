@@ -10,7 +10,7 @@ class URLForm(forms.Form):
                 'class': 'form-control',
                 'aria-label': 'Enter with URL...',
                 'aria-describedby': 'button-addon2',
-            }
+            },
         ),
         required=True,
     )

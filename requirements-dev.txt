@@ -28,15 +28,12 @@ cssbeautifier==1.15.1
     # via djlint
 django==5.0.6
     # via
-    #   django-allauth
     #   django-bootstrap5
     #   django-stubs
     #   django-stubs-ext
     #   djangorestframework
     #   drf-spectacular
     #   shurl_django (pyproject.toml)
-django-allauth==0.63.3
-    # via shurl_django (pyproject.toml)
 django-bootstrap5==24.2
     # via shurl_django (pyproject.toml)
 django-environ==0.11.2
@@ -81,8 +78,10 @@ pathspec==0.12.1
     # via djlint
 pip-tools==7.4.1
     # via shurl_django (pyproject.toml)
-psycopg2-binary==2.9.9
+psycopg==3.1.19
     # via shurl_django (pyproject.toml)
+psycopg-binary==3.1.19
+    # via psycopg
 pyproject-hooks==1.1.0
     # via
     #   build
@@ -118,8 +117,11 @@ typing-extensions==4.12.1
     #   django-stubs
     #   django-stubs-ext
     #   mypy
+    #   psycopg
 tzdata==2024.1
-    # via django
+    # via
+    #   django
+    #   psycopg
 uritemplate==4.1.1
     # via drf-spectacular
 wheel==0.43.0

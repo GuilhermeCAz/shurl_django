@@ -44,8 +44,8 @@ dependencies:
 
 .PHONY: requirements
 requirements:
-	pip-compile -o requirements.txt --strip-extras
-	pip-compile -o requirements-dev.txt --strip-extras --extra=dev
+	pip-compile -o requirements.txt
+	pip-compile -o requirements-dev.txt --extra=dev
 
 .PHONY: help
 help:

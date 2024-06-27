@@ -6,11 +6,10 @@ requires-python = ">=3.12"
 authors = [{ "name" = "GuilhermeCAz" }]
 dependencies = [
     "django",
-    "django-allauth",
     "django-bootstrap5",
     "django-environ",
     "drf-spectacular",
-    "psycopg2-binary",
+    "psycopg[binary]",
 ]
 
 [project.optional-dependencies]
@@ -19,6 +18,9 @@ dev = ["django-stubs", "djlint", "mypy", "pip-tools", "ruff"]
 [tool.djlint]
 max_line_length = 80
 profile = "django"
+
+[tool.pip-tools]
+strip-extras = true
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
@@ -31,40 +33,19 @@ line-length = 79
 quote-style = "single"
 
 [tool.ruff.lint]
-select = [
-    "A",   # flake8-builtins
-    "ANN", # flake8-annotations
-    "B",   # flake8-bugbear
-    "C4",  # flake8-comprehensions
-    # "D",    # pydocstyle
-    "DJ",     # flake8-django (DJ)
-    "E",      # pycodestyle error
-    "EM",     # flake8-errmsg
-    "F",      # flake8
-    "FBT001", # boolean-type-hint-positional-argument
-    "FURB",   # refurb
-    "I",      # isort
-    "ICN",    # flake8-import-conventions
-    "ISC",    # flake8-implicit-str-concat
-    "N",      # pep8-naming
-    "PD",     # pandas-vet
-    "PGH",    # pygrep-hooks
-    "PL",     # Pylint
-    "RET",    # flake8-return
-    "RUF",    # ruff-specific rules
-    "S",      # flake8-bandit
-    "SIM",    # flake8-simplify
-    "TCH",    # flake8-type-checking
-    "TID",    # flake8-tidy-imports
-    "TRY",    # tryceratops
-    "UP",     # pyupgrade
-    "W",      # pycodestyle warning
-]
+select = ["ALL"]
 
 extend-ignore = [
     "ANN101", # missing-type-self: deprecated
     "D212",   # multi-line-summary-first-line: clashes with D213
+    "Q000",   # quotes: single quotes are preferred
+    "ARG",    # flake8-unused-arguments
+    "D",      # pydocstyle: removed during early development
+    "ERA",    # eradicate: removed during early development
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"tests.py" = ["S101"]
 
 [tool.setuptools]
 py-modules = []

@@ -1,5 +1,3 @@
-from typing import ClassVar
-
 from django.db.models import query
 from django.http.request import HttpRequest
 from django.shortcuts import (
@@ -10,7 +8,7 @@ from django.shortcuts import (
     redirect,
     render,
 )
-from rest_framework import permissions, viewsets
+from rest_framework import viewsets
 
 from app.forms import URLForm
 from app.models import URL
@@ -25,7 +23,6 @@ class URLViewSet(viewsets.ModelViewSet):
 
     queryset = URL.objects.all()
     serializer_class = URLSerializer
-    permission_classes: ClassVar = [permissions.IsAuthenticated]
 
     def get_queryset(self) -> query.QuerySet[URL]:
         """
@@ -42,7 +39,8 @@ class URLViewSet(viewsets.ModelViewSet):
 
 
 def redirect_to_original(
-    request: HttpRequest, slug: str
+    request: HttpRequest,
+    slug: str,
 ) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
     """
     Redirects the user to the original URL associated with a given slug.

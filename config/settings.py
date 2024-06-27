@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-from datetime import timedelta
 from pathlib import Path
 
 import environ
@@ -31,13 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.sites',
     'django.contrib.staticfiles',
     'app',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'authentication',
     'django_bootstrap5',
     'drf_spectacular',
     'rest_framework',
@@ -51,7 +45,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -82,10 +75,9 @@ DATABASES = {
         'PASSWORD': env('POSTGRES_PASSWORD'),
         'HOST': 'db',
         'PORT': env('POSTGRES_PORT', default='5432'),
-    }
+    },
 }
 
-AUTH_USER_MODEL = 'authentication.CustomUser'
 DJ_PWD_VALIDATION = 'django.contrib.auth.password_validation'  # noqa: S105
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': f'{DJ_PWD_VALIDATION}.UserAttributeSimilarityValidator'},
@@ -93,11 +85,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': f'{DJ_PWD_VALIDATION}.CommonPasswordValidator'},
     {'NAME': f'{DJ_PWD_VALIDATION}.NumericPasswordValidator'},
 ]
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -114,9 +101,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-    ),
 }
 
 SPECTACULAR_DEFAULTS = {
@@ -187,11 +171,4 @@ SPECTACULAR_DEFAULTS = {
     'OAUTH2_TOKEN_URL': None,
     'OAUTH2_REFRESH_URL': None,
     'OAUTH2_SCOPES': None,
-}
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
 }

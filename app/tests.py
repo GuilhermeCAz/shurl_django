@@ -15,18 +15,19 @@ class URLTestCase(TestCase):
 
     def test_string_representation(self) -> None:
         url = URL.objects.first()
-        self.assertEqual(str(url), 'http://example.com')
+        assert str(url) == 'http://example.com'
 
     # def test_slug_generation(self) -> None:
     #     url = URL.objects.first()
 
     def test_redirect_to_original(self) -> None:
         url = URL.objects.first()
-        self.assertEqual(url.original_url, 'http://example.com')
+        assert url.original_url == 'http://example.com'
 
         response = self.client.get(f'/{url.slug}')
 
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['Location'], 'http://example.com')
+        redirect_status_code = 302
+        assert response.status_code == redirect_status_code
+        assert response['Location'] == 'http://example.com'
 
-        self.assertEqual(URL.objects.count(), 1)
+        assert URL.objects.count() == 1
