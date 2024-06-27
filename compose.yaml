@@ -29,6 +29,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      WEB_PORT: ${WEB_PORT}
     env_file:
       - path: .env
         required: false

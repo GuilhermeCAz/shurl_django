@@ -28,7 +28,7 @@ jobs:
 
       - name: Build and start containers
         run: |
-          docker-compose up --build
+          docker-compose up --build --detach
 
       - name: Run migrations
         run: |
