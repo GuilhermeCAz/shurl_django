@@ -23,21 +23,22 @@ jobs:
 
       - name: Upgrade Docker Compose
         run: |
+          docker compose version
           sudo curl -L "https://github.com/docker/compose/releases/download/v2.28.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
 
       - name: Build and start containers
         run: |
-          docker-compose up --build --detach
+          docker compose up --build --detach
 
       - name: Run migrations
         run: |
-          docker-compose run web python manage.py migrate
+          docker compose run web python manage.py migrate
 
       - name: Run tests
         run: |
-          docker-compose run web python manage.py test
+          docker compose run web python manage.py test
 
       - name: Tear down
         run: |
-          docker-compose down
+          docker compose down

@@ -4,37 +4,37 @@ export
 # container
 .PHONY: up
 up:
-	docker-compose up --build --detach
+	docker compose up --build --detach
 
 .PHONY: down
 down:
-	docker-compose down
+	docker compose down
 
 .PHONY: restart
 restart: down up
 
 .PHONY: logs
 logs:
-	docker-compose logs
+	docker compose logs
 
 .PHONY: watch
 # Use on a different terminal for live updates on container files
 watch:
-	docker-compose watch
+	docker compose watch
 
 # django
 .PHONY: migrate
 migrate:
-	docker-compose run web python manage.py makemigrations
-	docker-compose run web python manage.py migrate
+	docker compose run web python manage.py makemigrations
+	docker compose run web python manage.py migrate
 
 .PHONY: superuser
 superuser:
-	docker-compose run web python manage.py createsuperuser --noinput
+	docker compose run web python manage.py createsuperuser --noinput
 
 .PHONY: collectstatic
 collectstatic:
-	docker-compose run web python manage.py collectstatic --noinput
+	docker compose run web python manage.py collectstatic --noinput
 
 # python
 .PHONY: dependencies
@@ -50,8 +50,8 @@ requirements:
 .PHONY: help
 help:
 	@echo Available targets:
-	@echo up               : Build and start containers (docker-compose up)
-	@echo down             : Stop and remove containers (docker-compose down)
+	@echo up               : Build and start containers (docker compose up)
+	@echo down             : Stop and remove containers (docker compose down)
 	@echo restart          : Restart containers
 	@echo logs             : Show container logs
 	@echo migrate          : Run Django migrations
