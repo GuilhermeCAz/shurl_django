@@ -21,7 +21,16 @@ Shurl is a URL shortening application built with Django. It allows users to crea
 - User authentication and registration // _TODO_
 - URL statistics // _TODO_
 
-## Project Setup and Management Commands
+## Project Setup
+
+Clone this repository:
+
+```sh
+git clone https://github.com/GuilhermeCAz/shurl_django.git
+cd shurl_django
+```
+
+Create a .env file according to .env.example.
 
 To build the Docker images and start the project in detached mode, use the following command:
 
